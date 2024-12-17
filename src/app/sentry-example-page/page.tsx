@@ -11,10 +11,14 @@ export default function Page() {
       if (!res.ok) {
         console.error("API call failed with status:", res.status);
         Sentry.captureMessage(`API call failed with status: ${res.status}`);
-        alert("API call failed!");
+        alert(`API call failed! Status: ${res.status}`);
       } else {
         console.log("API call successful!");
-        alert(await res.text()); // Display the API response
+        const responseText = await res.text();
+        alert(responseText); // Display the API response
+
+        // Optionally log a success message to Sentry as well
+        Sentry.captureMessage("API call successful!");
       }
     } catch (error) {
       console.error("Frontend error:", error);
