@@ -70,6 +70,6 @@ export const insertCustomerSchema = baseInsertSchema.extend({
 export const selectCustomerSchema = baseSelectSchema;
 
 // Types for the schemas
-export type InsertCustomerSchemaType = z.infer<typeof insertCustomerSchema>;
-export type SelectCustomerSchemaType = z.infer<typeof selectCustomerSchema>;
+export type insertCustomerSchemaType = z.infer<typeof insertCustomerSchema>;
+export type selectCustomerSchemaType = z.infer<typeof selectCustomerSchema>;
 

@@ -44,5 +44,5 @@ export const insertTicketSchema = baseInsertSchema.extend({
 export const selectTicketSchema = baseSelectSchema;
 
 // Types for the schemas
-export type InsertTicketSchemaType = z.infer<typeof insertTicketSchema>;
-export type SelectTicketSchemaType = z.infer<typeof selectTicketSchema>;
+export type insertTicketSchemaType = z.infer<typeof insertTicketSchema>;
+export type selectTicketSchemaType = z.infer<typeof selectTicketSchema>;
