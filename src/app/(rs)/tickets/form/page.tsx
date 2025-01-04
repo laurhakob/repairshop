@@ -1,10 +1,11 @@
 import { getCustomer } from "@/lib/queries/getCustomer";
-import { BackButton } from "@/components/BackButton";
 import { getTicket } from "@/lib/queries/getTicket";
+import { BackButton } from "@/components/BackButton";
 import * as Sentry from "@sentry/nextjs";
-import TicketForm from "./TicketForm";
+import TicketForm from "@/app/(rs)/tickets/form/TicketForm";
 
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
 import { Users, init as kindeInit } from "@kinde/management-api-js";
 
 export async function generateMetadata({
@@ -23,6 +24,7 @@ export async function generateMetadata({
     return {
       title: `New Ticket for Customer #${customerId}`,
     };
+
   if (ticketId)
     return {
       title: `Edit Ticket #${ticketId}`,
@@ -53,7 +55,6 @@ export default async function TicketFormPage({
       getPermission("manager"),
       getUser(),
     ]);
-
     const isManager = managerPermission?.isGranted;
 
     // New ticket form
@@ -75,22 +76,25 @@ export default async function TicketFormPage({
         return (
           <>
             <h2 className="text-2xl mb-2">
-              Customer ID #{customerId} is not active
+              Customer ID #{customerId} is not active.
             </h2>
             <BackButton title="Go Back" variant="default" />
           </>
         );
       }
+
       // return ticket form
       if (isManager) {
-        kindeInit(); // Initinalizes the Kinde Management API
+        kindeInit(); // Initializes the Kinde Management API
         const { users } = await Users.getUsers();
 
         const techs = users
           ? users.map((user) => ({ id: user.email!, description: user.email! }))
           : [];
 
-        return <TicketForm customer={customer} techs={techs} />;
+        return (
+          <TicketForm customer={customer} techs={techs} isManager={isManager} />
+        );
       } else {
         return <TicketForm customer={customer} />;
       }
@@ -111,21 +115,29 @@ export default async function TicketFormPage({
 
       const customer = await getCustomer(ticket.customerId);
 
-      // return ticket
+      // return ticket form
       if (isManager) {
-        kindeInit(); // Initinalizes the Kinde Management API
+        kindeInit(); // Initializes the Kinde Management API
         const { users } = await Users.getUsers();
 
         const techs = users
-          ? users.map((user) => ({ id: user.email!, description: user.email! }))
+          ? users.map((user) => ({
+              id: user.email?.toLowerCase()!,
+              description: user.email?.toLowerCase()!,
+            }))
           : [];
 
-        return <TicketForm customer={customer} ticket={ticket} techs={techs} />;
+        return (
+          <TicketForm
+            customer={customer}
+            ticket={ticket}
+            techs={techs}
+            isManager={isManager}
+          />
+        );
       } else {
         const isEditable =
           user.email?.toLowerCase() === ticket.tech.toLowerCase();
-        console.log("ue: ", user.email);
-        console.log("tech: ", ticket.tech);
 
         return (
           <TicketForm
@@ -139,7 +151,6 @@ export default async function TicketFormPage({
   } catch (e) {
     if (e instanceof Error) {
       Sentry.captureException(e);
-
       throw e;
     }
   }

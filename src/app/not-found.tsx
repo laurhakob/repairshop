@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata = {
   title: "Page Not Found",
@@ -6,23 +7,23 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-center bg-gray-100">
-      <h2 className="text-4xl font-bold text-red-500">Page Not Found</h2>
-      <Image
-        className="m-0 rounded-xl"
-        src="/images/not-found-1024x1024.png"
-        width={300}
-        height={300}
-        alt="Page Not Found"
-        sizes="300px"
-        priority={true}
-        title="Page Not Found"
-      />
-      <div className="mt-4">
-        <a href="/" className="text-blue-500 hover:underline">
-          Go back to the homepage
-        </a>
+    <div className="px-2 w-full">
+      <div className="mx-auto py-4 flex flex-col justify-center items-center gap-4">
+        <h2 className="text-2xl">Page Nsrtgbyyuot Found</h2>
+        <Image
+          className="m-0 rounded-xl"
+          src="/images/not-found-1024x1024.png"
+          width={300}
+          height={300}
+          sizes="300px"
+          alt="Page Not Found"
+          priority={true}
+          title="Page Not Found"
+        />
       </div>
+      <Link href="/tickets" className="text-center hover:underline">
+        <h3>Go Home</h3>
+      </Link>
     </div>
   );
 }

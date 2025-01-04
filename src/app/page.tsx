@@ -11,8 +11,8 @@ export default function Home() {
             Repair Shop
           </h1>
           <address>
-            555 Gateway Lane <br />
-            Kansas City, KS 55555
+            37 Gog <br />
+            Yerevan City, 55555
           </address>
           <p>Open Daily: 9am to 5pm</p>
           <Link href="tel:5555555555" className="hover:underline">
