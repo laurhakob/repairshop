@@ -26,7 +26,6 @@ export function BackButton({ title, variant, className, ...props }: Props) {
       className={className}
       onClick={() => router.back()}
       title={title}
-      //es hajord toxt propsi chat gbtn a avelacrel, vortev mi qqqani tox verev ...propsy error er talis vor iran cheinq ogtagorcel, dra haamr inqt taky ogtagorcrc gbt-n
       {...props}
     >
       {title}
